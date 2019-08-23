@@ -20,14 +20,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('users', 'UserController@store');
 Route::get('users', 'UserController@index');
 
+Route::post('login', 'AuthController@login');
+
 Route::group([
 
-    'middleware' => 'api',
+    'middleware' => ['api','jwt.verify'],
 
 ], function ($router) {
 
-    Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
+
 });
